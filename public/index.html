@@ -1,0 +1,217 @@
+<!-- component -->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/tailwind/tailwind.min.css" />
+    <!-- <script src="https://cdn.tailwindcss.com"></script> -->
+    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.12/dist/sweetalert2.all.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script src="../js/activeTablePublic.js"></script>
+    <script type="module" src="../js/fetch_public.js"></script>
+    <title>Proyek Mahasiswa</title>
+  </head>
+
+  <body>
+    <div class="bg-gradient-to-r from-blue-300 to-indigo-300 min-h-screen">
+      <div class="grid grid-cols-12 gap-0">
+        <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-9 xxl:col-span-9 px-6 py-6">
+          <div class="grid grid-cols-12 gap-6">
+            <div class="col-span-12 sm:col-span-12 md:col-span-4 lg:col-span-4 xxl:col-span-4">
+              <!-- Start Nav Bar -->
+              <nav class="bg-white p-3 rounded-xl shadow-xl flex items-center justify-center">
+                <div class="flex space-x-6 items-center">
+                  <div class="flex space-x-2 items-center">
+                    <p class="font-semibold">PROYEK MAHASISWA</p>
+                    <div class="bg-gray-800 rounded-md p-2 flex items-center">
+                      <i class="fab fa-github-alt fa-sm text-white"></i>
+                    </div>
+                  </div>
+                </div>
+              </nav>
+              <!-- End Nav Bar -->
+            </div>
+            <div class="col-span-12 sm:col-span-12 md:col-span-8 lg:col-span-8 xxl:col-span-8">
+              <!-- Start Card List -->
+              <div x-data="{ active: 1 }" class="bg-white p-4 rounded-xl shadow-xl flex items-center justify-center grid grid-cols-3 md:grid-cols-3">
+                <a href="#" onclick="TampilProyek1()" class="flex space-x-2 items-center text-gray-400 m-auto" x-bind:class="{'text-indigo-600 border-b-4 border-indigo-600': active === 1 }" x-on:click.prevent="active = 1">
+                  <p class="font-semibold text-sm">Proyek 1</p>
+                </a>
+                <a href="#" onclick="TampilProyek2()" class="flex space-x-2 items-center text-gray-400 m-auto" x-bind:class="{'text-indigo-600 border-b-4 border-indigo-600': active === 2 }" x-on:click.prevent="active = 2">
+                  <p class="font-semibold text-sm">Proyek 2</p>
+                </a>
+                <a href="#" onclick="TampilProyek3()" class="flex space-x-2 items-center text-gray-400 m-auto" x-bind:class="{'text-indigo-600 border-b-4 border-indigo-600': active === 3 }" x-on:click.prevent="active = 3">
+                  <p class="font-semibold text-sm">Proyek 3</p>
+                </a>
+              </div>
+              <!-- End Card List -->
+            </div>
+            <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-12 xxl:col-span-12">
+              <!-- Start Card List -->
+              <div class="bg-white p-4 rounded-xl shadow-xl items-center justify-center mt-1">
+                <div class="space-x-0 items-center">
+                  <div class="mb-2">
+                    <input
+                      type="text"
+                      name="search"
+                      id="search"
+                      onkeyup="searchFunction()"
+                      placeholder="Cari nama, npm, atau kelas.."
+                      class="w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 text-base font-medium text-[#6B7280] outline-none focus:border-[#6A64F1] focus:shadow-md" />
+                  </div>
+                  <div class="overflow-hidden border border-coolGray-100 rounded-md shadow-dashboard">
+                    <div class="overflow-x-auto">
+                      <table class="w-full" id="iniTabelproyek1">
+                        <p class="font-semibold text-base ml-2 mt-2 mb-2" id="textproyek1"></p>
+                        <p class="font-semibold text-base ml-2 mt-2 mb-2" id="textproyek2" style="display: none"></p>
+                        <p class="font-semibold text-base ml-2 mt-2 mb-2" id="textproyek3" style="display: none"></p>
+                        <tr class="whitespace-nowrap h-11 bg-coolGray-50 bg-opacity-80 border-b border-coolGray-100">
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas Partner</p>
+                            </div>
+                          </th>
+                          <!-- <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Pembimbing</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Penguji</p>
+                            </div>
+                          </th> -->
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Tanggal Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Ruang Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Action</th>
+                          <th class="whitespace-nowrap font-semibold text-xs text-coolGray-500 uppercase text-center"></th>
+                        </tr>
+
+                        <!-- ISI TABEL DARI SINI (BUAT pada FILe tabel.js) -->
+
+                        <!-- ISI TABEL SAMPAI DISINI (BUAT pada FILE tabel.js) -->
+                      </table>
+                      <table class="w-full" id="iniTabelproyek2" style="display: none">
+                        <tr class="whitespace-nowrap h-11 bg-coolGray-50 bg-opacity-80 border-b border-coolGray-100">
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas Partner</p>
+                            </div>
+                          </th>
+                          <!-- <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Pembimbing</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Penguji</p>
+                            </div>
+                          </th> -->
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Tanggal Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Ruang Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Action</th>
+                          <th class="whitespace-nowrap font-semibold text-xs text-coolGray-500 uppercase text-center"></th>
+                        </tr>
+
+                        <!-- ISI TABEL DARI SINI (BUAT pada FILe tabel.js) -->
+
+                        <!-- ISI TABEL SAMPAI DISINI (BUAT pada FILE tabel.js) -->
+                      </table>
+                      <table class="w-full" id="iniTabelproyek3" style="display: none">
+                        <tr class="whitespace-nowrap h-11 bg-coolGray-50 bg-opacity-80 border-b border-coolGray-100">
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Nama, NPM & Kelas Partner</p>
+                            </div>
+                          </th>
+                          <!-- <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Pembimbing</p>
+                            </div>
+                          </th>
+                          <th class="px-4 font-semibold text-xs text-coolGray-500 uppercase text-left">
+                            <div class="flex items-center">
+                              <p>Dosen Penguji</p>
+                            </div>
+                          </th> -->
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Tanggal Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Ruang Sidang</th>
+                          <th class="whitespace-nowrap px-4 font-semibold text-xs text-coolGray-500 uppercase text-center">Action</th>
+                          <th class="whitespace-nowrap font-semibold text-xs text-coolGray-500 uppercase text-center"></th>
+                        </tr>
+
+                        <!-- ISI TABEL DARI SINI (BUAT pada FILe tabel.js) -->
+
+                        <!-- ISI TABEL SAMPAI DISINI (BUAT pada FILE tabel.js) -->
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- End Card List -->
+            </div>
+          </div>
+        </div>
+        <div class="col-span-12 sm:col-span-12 md:col-span-12 lg:col-span-3 xxl:col-span-3 px-6 py-6">
+          <!-- Start profile Card -->
+          <div class="bg-white rounded-xl p-4 shadow-xl">
+            <div class="flex flex-col justify-center items-center">
+              <div class="w-32 h-32 rounded-full bg-gray-300 border-2 border-white mt-2">
+                <img src="../ulbi.jpg " class="rounded-full w-auto" />
+              </div>
+              <p class="font-semibold text-xl mt-1">PROYEK TI</p>
+              <div class="relative p-4 rounded-lg shadow-xl w-full bg-cover bg-center h-32 mt-4" style="background-image: url('https://images.pexels.com/photos/1072179/pexels-photo-1072179.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500')">
+                <div class="absolute inset-0 bg-gray-800 bg-opacity-50"></div>
+                <div class="relative w-full h-full px-4 sm:px-6 lg:px-4 flex items-center justify-center">
+                  <div>
+                    <h3 class="text-center text-white text-lg">Teknik Informatika</h3>
+                    <h3 class="text-center text-white text-3xl mt-2 font-bold">ULBI</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- End profile Card -->
+          <!-- Start Card List -->
+
+          <!-- End Card List -->
+          <!-- Start Card List -->
+          <!-- <div class="bg-white rounded-xl p-4 shadow-xl mt-4">
+            <div class="flex flex-col justify-center items-center">
+              <img src="https://cdn3d.iconscout.com/3d/premium/thumb/upload-social-media-post-4291893-3569926.png" class="w-auto h-40 rounded-lg" />
+              <button class="mt-0 mb-5 bg-indigo-600 hover:bg-indigo-700 shadow-xl text-white font-bold py-2 px-4 rounded"><a href="insert_dataProyek.html">Tambah Proyek</a></button>
+              <button class="mt-0 mb-5 bg-indigo-600 hover:bg-indigo-700 shadow-xl text-white font-bold py-2 px-4 rounded"><a href="insert_dataMahasiswa.html">Tambah Mahasiswa</a></button>
+              <button class="mt-0 mb-5 bg-indigo-600 hover:bg-indigo-700 shadow-xl text-white font-bold py-2 px-4 rounded"><a href="insert_dataDosen.html">Tambah Dosen</a></button>
+            </div>
+          </div> -->
+          <!-- End Card List -->
+        </div>
+      </div>
+    </div>
+    <script src="../js/search_public.js"></script>
+    <script src="../js/charts-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+  </body>
+</html>

@@ -62,5 +62,20 @@ function saveToken(token) {
 }
 
 if (localStorage.getItem("jwtToken") != null) {
-  document.getElementById("formlogin").innerHTML = "Maneh udah login!";
+  Swal.fire({
+    title: "You are already logged in",
+    text: "you need to log out before logging in as different user",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Logout",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("jwtToken");
+      window.location.reload();
+    } else {
+      window.location.href = "../admin/index.html";
+    }
+  });
 }

@@ -47,7 +47,7 @@ function PostLogin(email, password) {
 
 function GetResponsesSuccess(result) {
   saveToken(result.token);
-  window.location.href = "../template/index.html";
+  window.location.href = "../admin/index.html";
 }
 
 function GetResponsesFailed(result) {

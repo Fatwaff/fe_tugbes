@@ -51,7 +51,11 @@ function GetResponsesSuccess(result) {
 }
 
 function GetResponsesFailed(result) {
-  document.getElementById("alertlogin").innerHTML = alert.replace("#COLORBG#", "red").replace("#COLORTEXT#", "red").replace("#NAME#", "Login gagal!").replace("#VALUE#", result.message);
+  document.getElementById("alertlogin").innerHTML = alert
+    .replace("#COLORBG#", "red")
+    .replace("#COLORTEXT#", "red")
+    .replace("#NAME#", "Login gagal!")
+    .replace("#VALUE#", result.message);
   $(".spinner").fadeOut();
   $(".formlogin").delay(800).fadeIn();
 }
@@ -64,7 +68,7 @@ function saveToken(token) {
 if (localStorage.getItem("jwtToken") != null) {
   Swal.fire({
     title: "You are already logged in",
-    text: "you need to log out before logging in as different user",
+    text: "You need to log out before logging in as different user",
     icon: "warning",
     showCancelButton: true,
     confirmButtonColor: "#3085d6",
